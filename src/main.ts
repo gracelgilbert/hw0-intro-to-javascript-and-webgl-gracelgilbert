@@ -18,6 +18,7 @@ const controls = {
   'Load Scene': loadScene, // A function pointer, essentially
   color: "#ff0000",
   shader: 0,
+  geometry: 0,
 };
 
 let icosphere: Icosphere;
@@ -62,6 +63,8 @@ function main() {
   gui.add(controls, 'Load Scene');
   gui.addColor(controls, 'color');
   gui.add(controls, 'shader', { lambert: 0, custom: 1} );
+  gui.add(controls, 'geometry', { Icosphere: 0, Cube: 1} );
+
 
 
 
@@ -120,18 +123,35 @@ function main() {
       let b: number = parseInt(result[3], 16);
 
     if (controls.shader == 1) {
-      renderer.render(camera, m_time, vec4.fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), custom, [
-        // cube,
-        icosphere,
-        // square,
-      ]);
+      if (controls.geometry == 0) {
+        renderer.render(camera, m_time, vec4.fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), custom, [
+          // cube,
+          icosphere,
+          // square,
+        ]);
+      } else {
+        renderer.render(camera, m_time, vec4.fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), custom, [
+          cube,
+          // icosphere,
+          // square,
+        ]);
+      }
+
     }
     else {
-      renderer.render(camera, m_time, vec4.fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), lambert, [
-        // cube,
-        icosphere,
-        // square,
-      ]);
+      if (controls.geometry == 0) {
+        renderer.render(camera, m_time, vec4.fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), lambert, [
+          // cube,
+          icosphere,
+          // square,
+        ]);
+      } else {
+        renderer.render(camera, m_time, vec4.fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), lambert, [
+          cube,
+          // icosphere,
+          // square,
+        ]);
+      }
     }
     stats.end();
     m_time = m_time + 1.0;

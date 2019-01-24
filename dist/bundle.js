@@ -5986,6 +5986,7 @@ const controls = {
     'Load Scene': loadScene,
     color: "#ff0000",
     shader: 0,
+    geometry: 0,
 };
 let icosphere;
 let square;
@@ -6024,6 +6025,7 @@ function main() {
     gui.add(controls, 'Load Scene');
     gui.addColor(controls, 'color');
     gui.add(controls, 'shader', { lambert: 0, custom: 1 });
+    gui.add(controls, 'geometry', { Icosphere: 0, Cube: 1 });
     // get canvas and webgl context
     const canvas = document.getElementById('canvas');
     const gl = canvas.getContext('webgl2');
@@ -6069,16 +6071,30 @@ function main() {
         let g = parseInt(result[2], 16);
         let b = parseInt(result[3], 16);
         if (controls.shader == 1) {
-            renderer.render(camera, m_time, __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), custom, [
-                // cube,
-                icosphere,
-            ]);
+            if (controls.geometry == 0) {
+                renderer.render(camera, m_time, __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), custom, [
+                    // cube,
+                    icosphere,
+                ]);
+            }
+            else {
+                renderer.render(camera, m_time, __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), custom, [
+                    cube,
+                ]);
+            }
         }
         else {
-            renderer.render(camera, m_time, __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), lambert, [
-                // cube,
-                icosphere,
-            ]);
+            if (controls.geometry == 0) {
+                renderer.render(camera, m_time, __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), lambert, [
+                    // cube,
+                    icosphere,
+                ]);
+            }
+            else {
+                renderer.render(camera, m_time, __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].fromValues(r / 255.0, g / 255.0, b / 255.0, 1.0), lambert, [
+                    cube,
+                ]);
+            }
         }
         stats.end();
         m_time = m_time + 1.0;
