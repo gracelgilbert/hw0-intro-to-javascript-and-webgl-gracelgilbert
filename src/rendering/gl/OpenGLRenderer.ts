@@ -33,6 +33,7 @@ class OpenGLRenderer {
     prog.setViewProjMatrix(viewProj);
     prog.setGeometryColor(color);
     prog.setTime(m_time);
+    prog.setCameraPos(vec4.fromValues(camera.position[0], camera.position[1], camera.position[2], 1.0));
 
     for (let drawable of drawables) {
       prog.draw(drawable);
